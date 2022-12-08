@@ -1,16 +1,17 @@
 from ariadne.server import Server
 from ariadne.util import setup_logging
-from ariadne.contrib.spacy import SpacyNerClassifier
-
+from ariadne.contrib.rasa import RasaClassifier
 setup_logging()
 
 server = Server()
 
-server.add_classifier("spacy_ner", SpacyNerClassifier("en_core_web_sm"))
+#server.add_classifier("spacy_ner", SpacyNerClassifier("en_core_web_sm"))
 # server.add_classifier("spacy_pos", SpacyPosClassifier("en_core_web_sm"))
 # server.add_classifier("sklearn_sentence", SklearnSentenceClassifier())
 # server.add_classifier("jieba", JiebaSegmenter())
 # server.add_classifier("stemmer", NltkStemmer())
+rasa_models_path = "./models/RasaClassifier/" # put your packed rasa model into this folder
+server.add_classifier("rasa", RasaClassifier(rasa_models_path))
 # server.add_classifier("leven", LevenshteinStringMatcher())
 # server.add_classifier("sbert", SbertSentenceClassifier())
 # server.add_classifier(
@@ -53,4 +54,4 @@ server.add_classifier("spacy_ner", SpacyNerClassifier("en_core_web_sm"))
 app = server._app
 
 if __name__ == "__main__":
-    server.start(debug=True, port=40022)
+    server.start(debug=False, port=40022)
